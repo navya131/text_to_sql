@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI SQL Generator</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🤖 AI SQL Generator</h1>
+
+        <form method="POST">
+
+            <textarea
+                name="prompt"
+                placeholder="Enter your prompt here...
+Example:
+Show employees whose salary is greater than 50000 and department is IT"
+                required>{{ prompt if prompt else '' }}</textarea>
+
+            <button type="submit">
+                Generate SQL Query
+            </button>
+
+        </form>
+
+        {% if generated_query %}
+
+        <div class="output-box">
+
+            <h2>Generated Query</h2>
+
+            <pre>{{ generated_query }}</pre>
+
+        </div>
+
+        {% endif %}
+
+        {% if history %}
+
+        <div class="history">
+
+            <h2>Query History</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Prompt</th>
+                        <th>Generated Query</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in history %}
+
+                    <tr>
+
+                        <td>{{ item.prompt }}</td>
+
+                        <td>
+                            <code>{{ item.query }}</code>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
